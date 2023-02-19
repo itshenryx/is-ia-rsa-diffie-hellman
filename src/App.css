@@ -35,5 +35,7 @@
     letter-spacing: 0.15rem;
     font-size: 0.8rem;
 
-    opacity: 0.2;
+    opacity: 0.1;
+    mix-blend-mode: difference;
+    color: var(--clr-wray);
 }
