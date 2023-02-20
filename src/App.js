@@ -11,7 +11,7 @@ const App = () => {
     return (
         <div className="app flex-justify">
             <Options option={option} setOption={setOption} setStep={setStep}/>
-            <RSA step={step} setStep={setOption}/>
+            <RSA step={step} setStep={setStep}/>
             <div className="credits">
                 © Made by Nitai, Ashwin & Bharat for IS IA-1
             </div>

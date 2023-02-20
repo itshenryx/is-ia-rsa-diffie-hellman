@@ -1,7 +1,7 @@
 .options {
     display: flex;
     flex-direction: column;
-    overflow: clip;
+    overflow: hidden;
 
     width: fit-content;
     border-radius: 2rem;
@@ -95,7 +95,7 @@
     color: var(--clr-bray);
 
     padding: 1rem;
-    overflow: clip;
+    overflow: hidden;
 
     transition-property: transform, border-radius, background-color, color, box-shadow;
     transition-timing-function: ease-in-out;

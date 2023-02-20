@@ -1,0 +1,50 @@
+.info-button {
+    height: 2rem;
+    width: 2rem;
+    padding: 0.1rem 0.2rem;
+
+    display: inline-flex;
+    justify-content: center;
+
+    position: absolute;
+    right: 0.6rem;
+    top: -0.3rem;
+
+    background-color: var(--clr-wray);
+    border: none;
+    border-radius: 1rem;
+}
+
+.info-button svg {
+    opacity: 0.5;
+    color: var(--clr-bray);
+}
+
+.info-button:is(:focus,:active,:hover) svg {
+    opacity: 1;
+}
+
+.info-content {
+    border-radius: 1rem;
+    padding-block: 1rem;
+    padding-inline: 0.90rem;
+    width: 25rem;
+
+    text-align: left;
+    font-family: var(--font-dmsans);
+    font-size: 1rem;
+    line-height: 1.15;
+
+    color: var(--clr-bray);
+    background-color: white;
+    box-shadow: 0px 0px 80px 0px rgba(0,0,0,0.1);
+}
+
+.info-content:focus {
+    outline: none;
+}
+
+.info-arrow {
+    fill: white;
+}
+
