@@ -1,14 +1,14 @@
 .info-button {
     height: 2rem;
     width: 2rem;
-    padding: 0.1rem 0.2rem;
 
     display: inline-flex;
     justify-content: center;
 
     position: absolute;
-    right: 0.6rem;
-    top: -0.3rem;
+    top: 0.3rem;
+    bottom: 0;
+    left: -1rem;
 
     background-color: var(--clr-wray);
     border: none;
@@ -16,7 +16,9 @@
 }
 
 .info-button svg {
+    text-align: center;
     opacity: 0.5;
+    width: 1.5rem;
     color: var(--clr-bray);
 }
 
