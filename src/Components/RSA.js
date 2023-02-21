@@ -1,55 +1,85 @@
 import './rsa.css';
 import Info from './Info';
 import Typewriter from 'typewriter-effect';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 
-const RSA = ({step, setStep, setPage}) => {
-    const page = 1;
+const RSA = () => {
+    const [showButton, setShowButton] = useState("false");
+    const [animateOut, setAnimateOut] = useState("wait");
+    const [textRegen, setTextRegen] = useState("off");
+    const [page, setPage] = useState(0);
+
+    // RSA related data
     const [a, b] = generatePrimes(100, 1000),
         n = a * b,
         phi = (a - 1) * (b - 1);
 
-    const primesInfo = (<p>
-        <p>Usually, these prime numbers are really large,starting anywhere at <b>1024</b> bits to around <b>4096</b> bits, also it
-            is made sure that they are distant, otherwise the decryption key is crackable.</p> <br/> <p><b>φ(n)</b> represents the
-        count of numbers which are smaller than n, and coprime with n. </p></p>);
+    let e = 2;
+    while (e < phi) {
+        if (gcd(e, phi) === 1) break;
+        e++;
+    }
 
-    const phiInfo = (<p><b>φ(n)</b> represents the count of numbers which are smaller than n, and coprime with n. </p>);
+    // Display related data
+    const subTitles = ["Generation of Base Numbers","Generation the Encryption Key"],
+        specialInfo = [(<p>
+            <p>Usually, these prime numbers are really large,starting anywhere at <b>1024</b> bits to around <b>4096</b> bits,
+                also it
+                is made sure that they are distant, otherwise the decryption key is crackable.</p> <br/> <p><b>φ(n)</b> represents
+            the
+            count of numbers which are smaller than n, and coprime with n. </p></p>),
+        ],
+        body = [`<div class="wrapper"><span class="normal">We begin by generating two random <b>prime</b> numbers, </span> <span class="math">p = ${a}  &emsp; &emsp; q = ${b}</span> <span class="normal">Now we use these two numbers to calculate <b>n</b> and <b>φ(n)</b>, </span> <span class="math">n = p×q = ${a}×${b} <br/> &emsp; = ${n} <br/> φ = (p-1)×(q-1) = (${a}-1)×(${b}-1) <br/> &emsp; = ${phi} </span></div>`,
+            `
+            <div class="wrapper">
+              <span class="normal">The encryption key <b>e</b> must follow the following conditions, </span>
+              <span class="math">1 < <b>e</b> < φ(n) <br/>gcd{e,n} = 1 <br/>gcd{e,φ(n)} = 1 </span> 
+              <span class="normal">Following the aforementioned conditions, we calculate a value for <b>e</b>, </span> 
+              <span class="math">e = ${e} ; Public Key(e,n) = (${e},${n})</span>
+              <span class="normal">The newly calculated <b>e</b> & <b>n</b> will be used as a part of our public key and <b>e</b> will also be used to generate the private key.</span> 
+            </div>`]
 
-    const content = [[
-        (<span className="normal">We begin by generating two random <b>prime</b> numbers, <Info content={primesInfo}/> </span>),
-        (<span className="math">p = {a}  &emsp; &emsp; q = {b}</span>),
-        (
-            <span className="normal">Now we use these two numbers to calculate <b>n</b> and <b>φ(n)</b>, <Info content={phiInfo}/> </span>),
-        (<span className="math">n = p×q = {a}×{b} <br/> &emsp; = {n} <br/> φ = (p-1)×(q-1) = ({a}-1)×({b}-1) <br/> &emsp; = {phi} </span>)],
-    ];
 
-    const p = `<div class="wrapper"><span class="normal">We begin by generating two random <b>prime</b> numbers, </span> <span class="math">p = ${a}  &emsp; &emsp; q = ${b}</span> <span class="normal">Now we use these two numbers to calculate <b>n</b> and <b>φ(n)</b>, </span> <span class="math">n = p×q = ${a}×${b} <br/> &emsp; = ${n} <br/> φ = (p-1)×(q-1) = (${a}-1)×(${b}-1) <br/> &emsp; = ${phi} </span></div>`
+    useEffect(() => {
+        setTimeout(() => {setAnimateOut("false"); setTextRegen("on")}, 1500);
+    }, []);
 
     return (
-        <div className="rsa" data-motion={step}>
-            <div className="step-container flex-justify">
+        <div className="rsa">
+            <div className="step-container flex-justify" data-motion={animateOut}>
                 <div className="heading">
                     <h1>
-                        Step<span className="icon">#</span>1
+                        Step<span className="icon">#</span>{page + 1}
                     </h1>
                     <p className="sub-text">
-                        Generation of Base Numbers
+                        {subTitles[page]}
                     </p>
                 </div>
-                <p className="body" data-motion={page}>
-                    <Info content={primesInfo}/>
-                    <Typewriter
-                        options={{
-                            delay: 50,
-                        }}
-                        onInit={(typewriter) => {
-                            typewriter.pauseFor(1000).typeString(p).start();
-                        }}
-                    />
+                <p className="body">
+                    <Info content={specialInfo[page]}/>
+                    {
+                        textRegen === "on" ? <Typewriter
+                            options={{
+                                delay: 50,
+                            }}
+                            onInit={(typewriter) => {
+                                typewriter.typeString(body[page]).start().callFunction(() => setShowButton("true"));
+                            }}
+                        /> : ""
+                    }
                 </p>
             </div>
-            <button className="next-button flex-justify" onClick={() => setStep('two')}>
+            <button data-motion={showButton}
+                    className="next-button flex-justify"
+                    onClick={() => {
+                        setAnimateOut("true");
+                        setTimeout(() => {
+                            setPage(page+1);
+                            setTextRegen("off");
+                            setAnimateOut("false")
+                            setTimeout(() => setTextRegen("on"),20);
+                        }, 1000);
+                    }}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
                      className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round"
@@ -73,5 +103,11 @@ const generatePrimes = (min, max) => {
 
     return [primes[r1], primes[r2]];
 }
+
+const gcd = (a, b) => {
+    if (b === 0) return a;
+    return gcd(b, a % b);
+}
+
 
 export default RSA;

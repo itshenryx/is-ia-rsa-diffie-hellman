@@ -14,10 +14,17 @@
     transition-timing-function: ease-in-out;
     transition-duration: 400ms;
     transform: translateY(-100vh);
+    animation: animate-in 2s forwards ease-in-out;
 }
 
-.rsa[data-motion="one"] {
-    animation: animate-in 2s forwards ease-in-out;
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+
+    opacity: 0;
+    width: 100%;
 }
 
 .step-container {
@@ -50,47 +57,23 @@
     background-color: var(--clr-wray);
 }
 
-.step-container .body {
+.body {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    position: relative;
+
+    opacity: 0;
     width: 100%;
+    min-height: 2.6rem;
+    margin-top: 1rem;
     padding-left: 1rem;
     margin-left: 1rem;
-    border-left: rgb(36, 36, 36, 0.1) 1px solid;
 
     font-family: var(--font-dmsans);
     font-size: 1.1rem;
 
     color: var(--clr-bray);
-}
-
-.heading {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
-
-    width: 100%;
-}
-
-.rsa[data-motion="one"] .heading {
-    animation: animate-in-top 2.5s forwards ease-in-out;
-}
-
-.Typewriter__cursor{
-    display: none;
-}
-
-.wrapper {
-    margin-left: 1rem;
-    margin-top: 0.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.rsa[data-motion="one"] .body {
-    animation: fade-in-left 2.5s forwards ease-in-out;
+    border-left: rgb(36, 36, 36, 0.1) 1px solid;
 }
 
 .body b {
@@ -98,7 +81,7 @@
     font-weight: 500;
 }
 
-.danger {
+.body .danger {
     border-radius: 0.5rem;
     margin-block: 0.3rem;
     padding: 0.5rem;
@@ -110,12 +93,12 @@
     background-color: var(--clr-wray);
 }
 
-.normal {
+.body .normal {
     position: relative;
-
+    max-width: 89%;
 }
 
-.math {
+.body .math {
     --n: 5;
     margin-block: 0.4rem;
     margin-left: 5rem;
@@ -126,11 +109,20 @@
     /*text-align: center;*/
 }
 
-.body[data-motion="1"]{
-    animation: text-in 2s forwards ease-in-out;
+.wrapper {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.Typewriter__cursor {
+    display: none;
 }
 
 .next-button {
+    display: none;
     position: absolute;
     padding: 0.5rem;
     cursor: pointer;
@@ -149,10 +141,6 @@
     transition-duration: 300ms;
 }
 
-.rsa[data-motion="one"] .next-button {
-    animation: animate-in-bottom 4.5s forwards ease-in-out;
-}
-
 .next-button:is(:hover,:focus) {
     border-radius: 1rem;
 
@@ -164,6 +152,29 @@
 
 .next-button svg {
     width: 1.5rem;
+}
+
+/*Animations*/
+
+.step-container[data-motion="false"] .heading {
+    animation: animate-in-top 800ms forwards ease-in-out;
+}
+
+.step-container[data-motion="false"] .body {
+    animation: fade-in-left 800ms forwards ease-in-out;
+}
+
+.step-container[data-motion="true"] .heading {
+    animation: animate-out-top 800ms forwards ease-in-out;
+}
+
+.step-container[data-motion="true"] .body {
+    animation: fade-out-left 1000ms forwards ease-in-out;
+}
+
+.next-button[data-motion="true"] {
+    display: flex;
+    animation: animate-in-bottom 400ms forwards ease-in-out;
 }
 
 @keyframes animate-in {
@@ -179,7 +190,7 @@
 }
 
 @keyframes animate-in-top {
-    70% {
+    0% {
         opacity: 0;
         transform: translateY(-10rem);
     }
@@ -189,8 +200,19 @@
     }
 }
 
+@keyframes animate-out-top {
+    0% {
+        opacity: 1;
+        transform: translateY(0rem);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10rem);
+    }
+}
+
 @keyframes fade-in-left {
-    70% {
+    0% {
         opacity: 0;
         transform: translateX(-10rem);
     }
@@ -200,12 +222,26 @@
     }
 }
 
+@keyframes fade-out-left {
+    0% {
+        opacity: 1;
+        transform: translateX(0rem);
+        max-height: 30rem;
+    }
+    /*50%{*/
+    /*    opacity: 0;*/
+    /*    max-height: 40rem;*/
+    /*    transform: translateX(0rem);*/
+    /*}*/
+    100% {
+        opacity: 0;
+        max-height: 0;
+        transform: translateX(-10rem);
+    }
+}
+
 @keyframes animate-in-bottom {
     0% {
-        opacity: 0;
-        transform: translateY(10rem);
-    }
-    90% {
         opacity: 0;
         transform: translateY(10rem);
     }
@@ -215,13 +251,3 @@
     }
 }
 
-@keyframes text-in {
-    50% {
-        opacity: 0;
-        transform: translateX(-10vw);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}

@@ -1,7 +1,7 @@
 
 import './options.css';
 
-const Options = ({option,setOption,setStep,setPage,setChoice}) => {
+const Options = ({option,setOption,setChoice}) => {
     return (
         <div className="options flex-justify" data-motion={option}>
             <h1 data-motion={option}>
@@ -14,7 +14,7 @@ const Options = ({option,setOption,setStep,setPage,setChoice}) => {
                 <button data-motion={option} onClick={() => {
                     setChoice(1);
                     setOption("animate-rsa");
-                    setStep("one");}}>
+                    }}>
                     <span className="button-heading">
                         R.S.A. Algorithm
                     </span>
@@ -24,7 +24,6 @@ const Options = ({option,setOption,setStep,setPage,setChoice}) => {
                 </button>
                 <button data-motion={option} onClick={() => {
                     setOption("animate-dh");
-                    setPage(1);
                 }}>
                     <span className="button-heading">
                         Diffie-Hellman
