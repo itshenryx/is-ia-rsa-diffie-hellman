@@ -157,7 +157,7 @@
 /*Animations*/
 
 .step-container[data-motion="false"] .heading {
-    animation: animate-in-top 800ms forwards ease-in-out;
+    animation: animate-in-top 600ms forwards ease-in-out;
 }
 
 .step-container[data-motion="false"] .body {
@@ -165,7 +165,7 @@
 }
 
 .step-container[data-motion="true"] .heading {
-    animation: animate-out-top 800ms forwards ease-in-out;
+    animation: animate-out-top 600ms forwards ease-in-out;
 }
 
 .step-container[data-motion="true"] .body {
@@ -175,6 +175,11 @@
 .next-button[data-motion="true"] {
     display: flex;
     animation: animate-in-bottom 400ms forwards ease-in-out;
+}
+
+.next-button[data-motion="false"] {
+    display: flex;
+    animation: animate-out-bottom 400ms forwards ease-in-out;
 }
 
 @keyframes animate-in {
@@ -228,11 +233,6 @@
         transform: translateX(0rem);
         max-height: 30rem;
     }
-    /*50%{*/
-    /*    opacity: 0;*/
-    /*    max-height: 40rem;*/
-    /*    transform: translateX(0rem);*/
-    /*}*/
     100% {
         opacity: 0;
         max-height: 0;
@@ -251,3 +251,13 @@
     }
 }
 
+@keyframes animate-out-bottom {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(10rem);
+    }
+}

@@ -21,7 +21,7 @@ const RSA = () => {
     }
 
     // Display related data
-    const subTitles = ["Generation of Base Numbers","Generation the Encryption Key"],
+    const subTitles = ["Generation of Base Numbers","Generating the Encryption Key"],
         specialInfo = [(<p>
             <p>Usually, these prime numbers are really large,starting anywhere at <b>1024</b> bits to around <b>4096</b> bits,
                 also it
@@ -30,14 +30,30 @@ const RSA = () => {
             count of numbers which are smaller than n, and coprime with n. </p></p>),
         ],
         body = [`<div class="wrapper"><span class="normal">We begin by generating two random <b>prime</b> numbers, </span> <span class="math">p = ${a}  &emsp; &emsp; q = ${b}</span> <span class="normal">Now we use these two numbers to calculate <b>n</b> and <b>φ(n)</b>, </span> <span class="math">n = p×q = ${a}×${b} <br/> &emsp; = ${n} <br/> φ = (p-1)×(q-1) = (${a}-1)×(${b}-1) <br/> &emsp; = ${phi} </span></div>`,
-            `
-            <div class="wrapper">
+            `<div class="wrapper">
               <span class="normal">The encryption key <b>e</b> must follow the following conditions, </span>
               <span class="math">1 < <b>e</b> < φ(n) <br/>gcd{e,n} = 1 <br/>gcd{e,φ(n)} = 1 </span> 
               <span class="normal">Following the aforementioned conditions, we calculate a value for <b>e</b>, </span> 
               <span class="math">e = ${e} ; Public Key(e,n) = (${e},${n})</span>
               <span class="normal">The newly calculated <b>e</b> & <b>n</b> will be used as a part of our public key and <b>e</b> will also be used to generate the private key.</span> 
-            </div>`]
+            </div>`,
+            `<div class="wrapper">
+              <span class="normal">The decryption key <b>d</b> follows the condition, </span>
+              <span class="math">(e × d)mod|φ(n)| = 1</span> 
+              <span class="normal">We will use this condition to calculate <b>d</b>. Using the Extended Euclidean Algorithm, the value of <b>d</b> comes out to be </span> 
+              <span class="math">d = ${d} ; Private Key(d,n) = (${d},${n})</span>
+              <span class="normal">We can now use the encryption key <b>e</b> to encrypt our ciphertext and the decryption key <b>d</b> to decrypt it.</span> 
+            </div>`,
+            `<div class="wrapper">
+                <span class="normal">For testing purposes, lets generate some generate some random message <b>c</b>, and convert it to numbers </span>
+                <span class="math">m = ${m} <br/> &espm; = ${mNum}</span> 
+                <span class="normal">Encrypting <b>m</b> with the encryption key <b>e</b>, we get <b>c</b>, the cipher</span> 
+                <span class="math">c = (m<sup><b>e</b></sup>)mod|n| <br/>&espm; = (${m}<sup>${e}</sup>)mod|{$n}| <br/>&espm; = ${c}</span>
+                <span class="normal">Now to decrypt the encrypted message using the decryption key <b>d</b>,</span> 
+                <span class="math">c = (c<sup><b>d</b></sup>)mod|n| <br/>&espm; = (${c}<sup>${d}</sup>)mod|{$n}| <br/>&espm; = ${m}</span>
+            </div>`
+        ]
+
 
 
     useEffect(() => {
@@ -60,7 +76,7 @@ const RSA = () => {
                     {
                         textRegen === "on" ? <Typewriter
                             options={{
-                                delay: 50,
+                                delay: 40,
                             }}
                             onInit={(typewriter) => {
                                 typewriter.typeString(body[page]).start().callFunction(() => setShowButton("true"));
@@ -73,12 +89,13 @@ const RSA = () => {
                     className="next-button flex-justify"
                     onClick={() => {
                         setAnimateOut("true");
+                        setShowButton("false");
                         setTimeout(() => {
                             setPage(page+1);
                             setTextRegen("off");
-                            setAnimateOut("false")
+                            setAnimateOut("false");
                             setTimeout(() => setTextRegen("on"),20);
-                        }, 1000);
+                        }, 900);
                     }}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
                      className="w-6 h-6">
