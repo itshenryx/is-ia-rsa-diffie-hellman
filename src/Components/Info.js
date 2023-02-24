@@ -12,7 +12,7 @@ const Info = ({content}) => {
                 </svg>
             </Popover.Trigger>
             <Popover.Portal>
-                <Popover.Content className="info-content flex-justify" sideOffset={5}>
+                <Popover.Content className="info-content " sideOffset={5}>
                     <p>
                         {content}
                     </p>

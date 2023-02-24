@@ -169,7 +169,7 @@
 }
 
 .step-container[data-motion="true"] .body {
-    animation: fade-out-left 1000ms forwards ease-in-out;
+    animation: fade-out-left 800ms forwards ease-in-out;
 }
 
 .next-button[data-motion="true"] {
@@ -230,13 +230,13 @@
 @keyframes fade-out-left {
     0% {
         opacity: 1;
-        transform: translateX(0rem);
+        transform: translateY(0rem);
         max-height: 30rem;
     }
     100% {
         opacity: 0;
         max-height: 0;
-        transform: translateX(-10rem);
+        transform: translateY(20rem);
     }
 }
 

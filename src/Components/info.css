@@ -2,7 +2,9 @@
     height: 2rem;
     width: 2rem;
 
-    display: inline-flex;
+    display: flex;
+    align-content: center;
+    align-items: center;
     justify-content: center;
 
     position: absolute;
@@ -17,6 +19,7 @@
 
 .info-button svg {
     text-align: center;
+    vertical-align: center;
     opacity: 0.5;
     width: 1.5rem;
     color: var(--clr-bray);
@@ -27,9 +30,12 @@
 }
 
 .info-content {
+    display: flex;
+    justify-content: start;
+    align-content: center;
     border-radius: 1rem;
     padding-block: 1rem;
-    padding-inline: 0.90rem;
+    padding-inline: 1rem;
     width: 25rem;
 
     text-align: left;
