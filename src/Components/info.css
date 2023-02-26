@@ -41,11 +41,27 @@
     text-align: left;
     font-family: var(--font-dmsans);
     font-size: 1rem;
-    line-height: 1.15;
+    line-height: 1.18;
 
     color: var(--clr-bray);
     background-color: white;
-    box-shadow: 0px 0px 80px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 80px 0px rgba(0, 0, 0, 0.1);
+}
+
+.info-content .math {
+    margin-left: 3rem;
+
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    line-height: 2rem;
+}
+
+.info-content .math-inline-two {
+    font-family: var(--font-mono);
+    background-color: var(--clr-wray);
+    padding: 0.2rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
 }
 
 .info-content:focus {

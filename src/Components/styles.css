@@ -17,6 +17,10 @@
     animation: animate-in 2s forwards ease-in-out;
 }
 
+.rsa[data-motion="4"]{
+    animation: animate-out 1.1s forwards ease-in-out;
+}
+
 .heading {
     display: flex;
     justify-content: space-between;
@@ -100,13 +104,21 @@
 
 .body .math {
     --n: 5;
-    margin-block: 0.4rem;
+    margin-block: 0.3rem;
     margin-left: 5rem;
 
     font-family: var(--font-mono);
     font-size: 1rem;
     line-height: 1.5rem;
     /*text-align: center;*/
+}
+
+.math-inline {
+    font-family: var(--font-mono);
+    background-color: var(--clr-wray);
+    padding: 0.2rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
 }
 
 .wrapper {
@@ -191,6 +203,15 @@
     }
     100% {
         transform: translateY(0) scale(1, 1);
+    }
+}
+
+@keyframes animate-out {
+    0% {
+        transform: translateY(0) scale(1, 1);
+    }
+    100% {
+        transform: translateY(100vh) scale(0.05, 0.2);
     }
 }
 

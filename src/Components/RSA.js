@@ -1,9 +1,9 @@
-import './rsa.css';
+import './styles.css';
 import Info from './Info';
 import Typewriter from 'typewriter-effect';
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect} from 'react';
 
-const RSA = () => {
+const RSA = ({setOption,setChoice}) => {
     const [showButton, setShowButton] = useState("false");
     const [animateOut, setAnimateOut] = useState("wait");
     const [textRegen, setTextRegen] = useState("off");
@@ -22,25 +22,40 @@ const RSA = () => {
         e++;
     }
 
-    const d = multiplicativeInverse(e,phi);
-    const c = encrypt(e,n,m).join('');
+    const d = multiplicativeInverse(e,phi),
+          result = encrypt(e,n,m),
+          c = result[0].join(''),
+          mNum = result[1].join('');
 
     // Display related data
     const subTitles = ["Generation of Base Numbers","Generating the Encryption Key","Generating the Decryption Key","Testing" +
         " the keys"],
-        specialInfo = [(<p>
-            Usually, these prime numbers are really large,starting anywhere at <b>1024</b> bits to around <b>4096</b> bits,
-                also it
-                is made sure that they are distant, otherwise the decryption key is crackable. <br/> <br/>
-            <b>φ(n)</b> represents the count of numbers which are smaller than n, and coprime with n. </p>),
+        specialInfo = [
             (<p>
-                The previously generated values are, <br/> <br/>
-                &emsp; &emsp; p = {a}, &emsp; q = {b} <br/>
-                &emsp; &emsp; n = {n}, &emsp; φ(n) = {phi} <br/> <br/>
-                The values of <b>p</b> and <b>q</b> are disposed of as soon as <b>n</b> & <b>φ(n)</b>, the only other way that remains to break the RSA algorithm is prime-factorization. If the numbers , p & q are too close, then they can be found in a few iterations and the keys can be generated.
+            Usually, these prime numbers are really large,starting anywhere at <b>1024</b> bits to around <b>4096</b> bits, also it is made sure that they are distant, otherwise the decryption key is crackable. <br/> <br/> <b>φ(n)</b> represents the count of numbers which are smaller than n, and coprime with n.
+            </p>),
+            (<p>
+                The previously generated values are, <br/>
+                <span className="math"> p = {a}, &emsp; q = {b} </span><br/>
+                The values of <b>p</b> and <b>q</b> are disposed of as soon as <b>n</b> & <b>φ(n)</b>, the only other way that remains to break the RSA algorithm is prime-factorization. If the numbers , p & q are too close, then they can be found in a few iterations and the keys can be generated. <br/>
+                <span className="math"> n = {n}, &emsp; φ(n) = {phi} </span>
+            </p>),
+            (<p>
+                The extended Euclidean algorithm is an extension to the Euclidean algorithm, and computes, in addition to the greatest common divisor (gcd) of integers a and b, also the coefficients of Bézout's identity, which are integers <b>x</b> and <b>y</b> such that <br/>
+                 <span className="math"> ax + by = gcd(a,b) </span> <br/>
+                This is a certifying algorithm, because the gcd is the only number that can simultaneously satisfy this equation and divide the inputs. It allows one to compute also, with almost no extra cost, the quotients of a and b by their greatest common divisor.
+            </p>),
+            (<p>
+                As one of the first widely used public-key encryption schemes, RSA laid the foundations for much of our secure communications. It was traditionally used in TLS and was also the original algorithm used in PGP encryption. RSA is still seen in a range of web browsers, email, VPNs, chat and other communication channels.
             </p>)
         ],
-        body = [`<div class="wrapper"><span class="normal">We begin by generating two random <b>prime</b> numbers, </span> <span class="math">p = ${a}  &emsp; &emsp; q = ${b}</span> <span class="normal">Now we use these two numbers to calculate <b>n</b> and <b>φ(n)</b>, </span> <span class="math">n = p×q = ${a}×${b} <br/> &emsp; = ${n} <br/> φ = (p-1)×(q-1) = (${a}-1)×(${b}-1) <br/> &emsp; = ${phi} </span></div>`,
+        body = [
+            `<div class="wrapper">
+                <span class="normal">We begin by generating two random <b>prime</b> numbers, </span>
+                <span class="math">p = ${a}  &emsp; &emsp; q = ${b}</span> 
+                <span class="normal">Now we use these two numbers to calculate <b>n</b> and <b>φ(n)</b>, </span>
+                <span class="math">n = p×q = ${a}×${b} <br/> &emsp; = ${n} <br/> φ = (p-1)×(q-1) = (${a}-1)×(${b}-1) <br/> &emsp; = ${phi} </span>
+            </div>`,
             `<div class="wrapper">
               <span class="normal">The encryption key <b>e</b> must follow the following conditions, </span>
               <span class="math">1 < <b>e</b> < φ(n) <br/>gcd{e,n} = 1 <br/>gcd{e,φ(n)} = 1 </span> 
@@ -56,23 +71,21 @@ const RSA = () => {
               <span class="normal">We can now use the encryption key <b>e</b> to encrypt our ciphertext and the decryption key <b>d</b> to decrypt it.</span> 
             </div>`,
             `<div class="wrapper">
-                <span class="normal">For testing purposes, lets generate some generate some random message <b>m</b>,</span>
-                <span class="math">m = ${m}</span> 
+                <span class="normal">For testing purposes, lets generate some generate some random message <b>m</b>, and convert it to numbers</span>
+                <span class="math">m = ${m} <br/> &emsp; = ${mNum} </span> 
                 <span class="normal">Encrypting <b>m</b> with the encryption key <b>e</b>, we get <b>c</b>, the cipher</span> 
-                <span class="math">c = (m<sup><b>e</b></sup>)mod|n| <br/>&emsp; = (${m}<sup>${e}</sup>)mod|${n}| <br/>&emsp; = ${c}</span>
+                <span class="math">c = (m<sup><b>e</b></sup>)mod|n| <br/>&emsp; = (${mNum}<sup>${e}</sup>)mod|${n}| <br/>&emsp; = ${c}</span>
                 <span class="normal">Now to decrypt the encrypted message using the decryption key <b>d</b>,</span> 
-                <span class="math">c = (c<sup><b>d</b></sup>)mod|n| <br/>&emsp; = (${c}<sup>${d}</sup>)mod|${n}| <br/>&emsp; = ${m}</span>
+                <span class="math">c = (c<sup><b>d</b></sup>)mod|n| <br/>&emsp; = (${c}<sup>${d}</sup>)mod|${n}| <br/>&emsp; = ${mNum} <br/> &emsp; = ${m}</span>
             </div>`
         ]
-
-
 
     useEffect(() => {
         setTimeout(() => {setAnimateOut("false"); setTextRegen("on")}, 1500);
     }, []);
 
     return (
-        <div className="rsa">
+        <div className="rsa" data-motion={page}>
             <div className="step-container flex-justify" data-motion={animateOut}>
                 <div className="heading">
                     <h1>
@@ -100,7 +113,14 @@ const RSA = () => {
                     className="next-button flex-justify"
                     onClick={() => {
                         if (page === 3) {
-
+                            setPage(page+1);
+                            setAnimateOut("true");
+                            setShowButton("false");
+                            setTimeout(()=>{
+                                setOption("animate-in");
+                                setChoice(0);
+                            },1500);
+                            return;
                         }
                         setAnimateOut("true");
                         setShowButton("false");
@@ -111,11 +131,17 @@ const RSA = () => {
                             setTimeout(() => setTextRegen("on"),20);
                         }, 900);
                     }}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                     className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                          d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"/>
-                </svg>
+                {page === 3 ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                         className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                              d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z"/>
+                    </svg>
+                )}
             </button>
         </div>
     );
@@ -158,13 +184,14 @@ const multiplicativeInverse = (e, phi) => {
 }
 
 const encrypt = (key, n, plaintext) => {
-    let ciphertext = [];
+    let ciphertext = [], numText = [];
     for (let i = 0; i < plaintext.length; i++) {
         let charCode = plaintext.charCodeAt(i);
         let encryptedCharCode = modPow(charCode, key, n);
+        numText.push(charCode);
         ciphertext.push(encryptedCharCode);
     }
-    return ciphertext;
+    return [ciphertext,numText];
 }
 
 const modPow = (base, exponent, modulus) => {

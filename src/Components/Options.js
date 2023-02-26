@@ -23,6 +23,7 @@ const Options = ({option,setOption,setChoice}) => {
                     </span>
                 </button>
                 <button data-motion={option} onClick={() => {
+                    setChoice(2);
                     setOption("animate-dh");
                 }}>
                     <span className="button-heading">
