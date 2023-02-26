@@ -67,7 +67,7 @@ const DH = ({setOption,setChoice}) => {
                 <span class="math">s = (g<sup>b)<sup>a</sup></sup>mod|N|<br/> &emsp; = ${B}<sup>${a}</sup>mod|${n}| <br/> &emsp; = ${sA}</span>
                 <span class="normal">On Bob's end,</span>
                 <span class="math">s = (g<sup>a)<sup>b</sup></sup>mod|N|<br/> &emsp; = ${A}<sup>${b}</sup>mod|${n}| <br/> &emsp; = ${sB}</span>
-                <span class="normal">As we can see, both Alice and Bob have generated the same key that they can now use to commuincate securely. Furthermore, <b>a</b> & <b>b</b> are discarded of as soon as the key is generated.</span>
+                <span class="normal">As we can see, both Alice and Bob have generated the same key that they can now use to communicate securely. Furthermore, <b>a</b> & <b>b</b> are discarded of as soon as the key is generated.</span>
             </div>`
         ]
 
