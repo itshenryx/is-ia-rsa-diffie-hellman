@@ -63,7 +63,7 @@ const DH = ({setOption,setChoice}) => {
                 Thus, even though the values <span class="math-inline">(g<sup>a</sup>)mod|N|</span> and <span class="math-inline">(g<sup>b</sup>)mod|N|</span> are shared over an unsecured channel, an attacker cannot use this information to compute the secret exponents a and b without solving the discrete logarithm problem, which is believed to be computationally infeasible for sufficiently large prime numbers.</span>
             </div>`,
             `<div class="wrapper">
-                <span class="normal">Finally, Alice and generate the secret key on their end.<br/>On Alice's end, </span>
+                <span class="normal">Finally, Alice and Bob generate the secret key on their end.<br/>On Alice's end, </span>
                 <span class="math">s = (g<sup>b)<sup>a</sup></sup>mod|N|<br/> &emsp; = ${B}<sup>${a}</sup>mod|${n}| <br/> &emsp; = ${sA}</span>
                 <span class="normal">On Bob's end,</span>
                 <span class="math">s = (g<sup>a)<sup>b</sup></sup>mod|N|<br/> &emsp; = ${A}<sup>${b}</sup>mod|${n}| <br/> &emsp; = ${sB}</span>
