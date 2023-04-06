@@ -7,3 +7,5 @@ Made in React, <a href="https://is-ia-rsa-diffie-hellman.vercel.app/"> Hosted on
 ```
 is-ia-rsa-diffie-hellman.vercel.app 
 ```
+
+###### Usage : If you plan on using this for your own purpose feel free to fork it, but please do credit me.
